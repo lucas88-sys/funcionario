@@ -1,0 +1,119 @@
+@SpringBootUsuario
+
+class Usuario {
+    private int id;
+    private String nome;
+
+    public Usuario(int id, String nome) {
+        this.id = id;
+        this.nome = Lucas;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Nome: " + nome;
+    }
+}
+
+public class CRUDUsuario {
+
+    private static List<Usuario> usuarios = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private static int contadorId = 1;
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n1. Criar Funcionario");
+            System.out.println("2. Listar Usuários");
+            System.out.println("3. Atualizar Usuário");
+            System.out.println("4. Deletar Usuário");
+            System.out.println("5. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // limpar o buffer
+
+            switch (opcao) {
+                case 1:
+                    criarUsuario();
+                    break;
+                case 2:
+                    listarUsuarios();
+                    break;
+                case 3:
+                    atualizarUsuario();
+                    break;
+                case 4:
+                    deletarUsuario();
+                    break;
+                case 5:
+                    System.exit(0);
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+    }
+
+    private static void criarUsuario() {
+        System.out.print("Digite o nome do usuário: ");
+        String nome = scanner.nextLine();
+        usuarios.add(new Usuario(contadorId++, nome));
+        System.out.println("Usuário criado com sucesso!");
+    }
+
+    private static void listarUsuarios() {
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado.");
+        } else {
+            System.out.println("Lista de usuários:");
+            for (Usuario u : usuarios) {
+                System.out.println(u);
+            }
+        }
+    }
+
+    private static void atualizarUsuario() {
+        System.out.print("Digite o ID do usuário que deseja atualizar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        for (Usuario u : usuarios) {
+            if (u.getId() == id) {
+                System.out.print("Digite o novo nome: ");
+                String novoNome = scanner.nextLine();
+                u.setNome(novoNome);
+                System.out.println("Usuário atualizado.");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
+    }
+
+    private static void deletarUsuario() {
+        System.out.print("Digite o ID do usuário que deseja deletar: ");
+        int id = scanner.nextInt();
+
+        Iterator<Usuario> iterator = usuarios.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getId() == id) {
+                iterator.remove();
+                System.out.println("Usuário deletado.");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
+    }
+}
+✅ Como usarjavac CRUDUsuario.java
+java CRUDUsuario
